@@ -12,40 +12,9 @@ int num_of_vertices, num_of_edges;
 vector<pair<int,int> > vertices;
 vector<pair<int,int> > edges;
 int input_vertex, goal_vertex;
-int vertices_visited = 0;
+int max_frontier_size = 0;
+int vertices_visited = 1;
 // ------------------------ COMPARATOR CLASS -------------------------
-/*class _priority_queue
-{
-	public:
-  	vector<int> pq;
-  	std::vector<int>::iterator iterator1 = pq.begin();
-  	void push(int n){
-  		if(pq.empty()){
-  			pq.insert ( iterator1, n);
-  		}
-  		else if (pq.size() == 1){
-  			if(pq[0] < n)
-  				pq.push_back(n);
-  			else
-  				pq.insert(iterator1+1,n);
-  		}
-  		else{
-  			for(int i = 0; i < pq.size(); i++){
-  				if(n < pq[i]){
-  					if(i == pq.size()-1)
-  						pq.push_back(n);
-  					else
-  						pq.insert ( pq.begin()+i , n);
-  				}
-  			}
-  		}
-  	}
-  	int pop_back(){
-  		int temp = pq.front();
-		pq.erase(pq.begin());  		
-  		return temp;
-  	}
-};*/
 struct comparator{
 	bool operator()(const Node * a, const Node* b) const{
 		return a -> heuristic > b -> heuristic;
@@ -88,7 +57,7 @@ Node * Search(Node * initial_state, int goal){
 	//queue <Node*>  frontier;
 	priority_queue<Node*,vector<Node*>,comparator> frontier;
 	vector<bool> visted;
-	
+
 	for(int i = 0; i < num_of_vertices; i++){
 		visted.push_back(false);
 	}
@@ -96,6 +65,8 @@ Node * Search(Node * initial_state, int goal){
 	frontier.push(initial_state);
 
 	while(!(frontier.empty())){
+		if (frontier.size() > max_frontier_size)
+			max_frontier_size = frontier.size();
 		Node * temp = frontier.top();
 		cout << "Checking Vertex:  " << temp -> v << endl;
 		frontier.pop();
@@ -103,6 +74,7 @@ Node * Search(Node * initial_state, int goal){
 			return temp; 
 		else if (visted[temp -> v] == false){
 			visted[temp -> v] = true;
+			vertices_visited++;
 			vector<Node * > children = successors(temp);
 			cout << "Pushing child vertices: ";
 			for (int i = 0; i < children.size(); i++){
@@ -200,7 +172,9 @@ int main(){
 	cout << "Start: (" << vertices[input_vertex].first << "," << vertices[input_vertex].second << ")\t";
 	cout << "Goal: (" << vertices[goal_vertex].first << "," << vertices[goal_vertex].second << ")\t";
 	cout << "Vertices: " << input_vertex << " and " << goal_vertex << endl;
+	cout << "Verticies Visited: " << vertices_visited << endl;
 	cout << "Path Length: " << path.size() << endl << endl;
+	cout << "Max queue size: " << max_frontier_size << endl;
 	cout << "Solution: " << endl;
 	// ------------------------- TRACEBACK ------------------------------- 
 	for(int i = path.size() -1 ; i >= 0; i--){
@@ -213,3 +187,4 @@ int main(){
   	myfile.close();
   	
 }
+
