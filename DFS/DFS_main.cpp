@@ -10,7 +10,8 @@ using namespace std;
 int num_of_vertices, num_of_edges; 
 vector<pair<int,int> > vertices;
 vector<pair<int,int> > edges;
-int vertices_visited = 0;
+int max_frontier_size = 0;
+int vertices_visited = 1;
 // -------------------------------------------------------------------
 // 					TEMPORARY SUCCESSOR FUNCTION 
 // -------------------------------------------------------------------
@@ -45,6 +46,8 @@ Node * Search(Node * initial_state, int goal){
 	frontier.push(initial_state);
 
 	while(!(frontier.empty())){
+		if (frontier.size() > max_frontier_size)
+			max_frontier_size = frontier.size();
 		Node * temp = frontier.top();
 		cout << "Checking Vertex:  " << temp -> v << endl;
 		frontier.pop();
@@ -52,6 +55,7 @@ Node * Search(Node * initial_state, int goal){
 			return temp; 
 		else if (visted[temp -> v] == false){
 			visted[temp -> v] = true;
+			vertices_visited++;
 			vector<Node * > children = successors(temp);
 			cout << "Pushing child vertices: ";
 			for (int i = 0; i < children.size(); i++){
@@ -149,8 +153,10 @@ int main(){
 	cout << "Start: (" << vertices[input_vertex].first << "," << vertices[input_vertex].second << ")\t";
 	cout << "Goal: (" << vertices[goal_vertex].first << "," << vertices[goal_vertex].second << ")\t";
 	cout << "Vertices: " << input_vertex << " and " << goal_vertex << endl;
-	//cout << "Vertices Visited: " << vertices_visited << "/" << num_of_vertices << endl;
+	cout << "Verticies Visited: " << vertices_visited << endl;
 	cout << "Path Length: " << path.size() << endl << endl;
+	cout << "Max queue size: " << max_frontier_size << endl;
+	cout << "Solution: " << endl;
 	// ------------------------- TRACEBACK ------------------------------- 
 	for(int i = path.size() -1 ; i >= 0; i--){
 		cout << "Vertex" << " " << path[i] -> v << "\t" ;
