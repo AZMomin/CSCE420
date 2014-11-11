@@ -1,0 +1,44 @@
+#variables
+ag1-1 ag1-2 ag1-3 ag1-4 ag2-1 ag2-2 ag2-3 ag2-4 ag3-1 ag3-2 ag3-3 ag3-4 ag4-1 ag4-2 ag4-3 ag4-4 
+#domains
+ag1-1 D
+ag1-2 D E A G 
+ag1-3 D E A G F B H 
+ag1-4 A
+ag2-1 I
+ag2-2 I H F 
+ag2-3 I H F G E C 
+ag2-4 B
+ag3-1 H
+ag3-2 H G I E 
+ag3-3 H G I E D F B 
+ag3-4 C
+ag4-1 E
+ag4-2 E D F B H 
+ag4-3 E D F B H A G C I 
+ag4-4 D
+#constraints
+neq ag1-1 ag2-1
+neq ag1-1 ag3-1
+neq ag1-1 ag4-1
+neq ag2-1 ag3-1
+neq ag2-1 ag4-1
+neq ag3-1 ag4-1
+neq ag1-2 ag2-2
+neq ag1-2 ag3-2
+neq ag1-2 ag4-2
+neq ag2-2 ag3-2
+neq ag2-2 ag4-2
+neq ag3-2 ag4-2
+neq ag1-3 ag2-3
+neq ag1-3 ag3-3
+neq ag1-3 ag4-3
+neq ag2-3 ag3-3
+neq ag2-3 ag4-3
+neq ag3-3 ag4-3
+neq ag1-4 ag2-4
+neq ag1-4 ag3-4
+neq ag1-4 ag4-4
+neq ag2-4 ag3-4
+neq ag2-4 ag4-4
+neq ag3-4 ag4-4
